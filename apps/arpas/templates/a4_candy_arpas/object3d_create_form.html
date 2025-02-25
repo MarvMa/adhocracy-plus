@@ -1,0 +1,13 @@
+{% extends "a4dashboard/base_dashboard_project.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Add a new 3D Model" %} {{ block.super }}{% endblock title %}
+
+{% block dashboard_project_content %}
+<div class="container">
+    <h1 class="mt-0">{% translate "Add a new 3D Model" %}</h1>
+
+    {% url "a4dashboard:object3d-list" organisation_slug=project.organisation.slug module_slug=module.slug as cancel %}
+    {% include "a4_candy_arpas/includes/object3d_form.html" with cancel=cancel %}
+</div>
+{% endblock dashboard_project_content %}

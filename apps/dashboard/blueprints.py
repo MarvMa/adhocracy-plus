@@ -2,12 +2,12 @@ from django.utils.translation import gettext_lazy as _
 
 from adhocracy4.dashboard.blueprints import ProjectBlueprint
 from adhocracy4.polls import phases as poll_phases
+from apps.arpas import phases as arpas_phases
 from apps.budgeting import phases as budgeting_phases
 from apps.debate import phases as debate_phases
 from apps.documents import phases as documents_phases
 from apps.ideas import phases as ideas_phases
 from apps.interactiveevents import phases as interactiveevent_phases
-from apps.arpas import phases as arpas_phases
 from apps.mapideas import phases as mapideas_phases
 from apps.topicprio import phases as topicprio_phases
 
@@ -181,11 +181,9 @@ blueprints = [
         "arpas",
         ProjectBlueprint(
             title=_("ARPAS"),
-            description=_(
-                "Participants can submit and view ideas in AR."
-            ),
+            description=_("Participants can submit and view ideas in AR."),
             content=[
-                arpas_phases.SuggestionPhase(),
+                arpas_phases.ArpasPhase(),
             ],
             image="images/live-discussion.svg",
             settings_model=None,

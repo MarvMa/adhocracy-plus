@@ -19,36 +19,25 @@ services:
             - "9000:9000"
             - "9001:9001"
         environment:
-            MINIO_ACCESS_KEY: minio
-            MINIO_SECRET_KEY: minio123
             MINIO_ROOT_USER: minio
             MINIO_ROOT_PASSWORD: minio123
         volumes:
             - minio_data:/data
             - minio_config:/root/.minio
         command: server /data --console-address ":9001"
-
-#    redis:
-#        image: redis:alpine
-#        container_name: redis
-#        ports:
-#            - "6379:6379"
-#
-#    postgres:
-#        image: postgres:13-alpine
-#        container_name: postgres
-#        environment:
-#            POSTGRES_USER: postgres
-#            POSTGRES_PASSWORD: postgres
-#            POSTGRES_DB: adhocracy
-#        ports:
-#            - "5432:5432"
-#        volumes:
-#            - postgres_data:/var/lib/postgresql/data
-#
-#volumes:
-#    postgres_data:
-
+#    createbuckets:
+#        image: minio/mc
+#        depends_on:
+#            - minio
+#        entrypoint: >
+#            /bin/sh -c "
+#            apk add nc &&
+#            while ! nc -z minio 9000; do echo 'Wait minio to startup...' && sleep 0.1; done; sleep 5 &&
+#            /usr/bin/mc config host add myminio http://minio:9000 access-key secret-key;
+#            /usr/bin/mc mb myminio/my-local-bucket;
+#            /usr/bin/mc policy download myminio/my-local-bucket;
+#            exit 0;
+#            "
 volumes:
     minio_data:
     minio_config:

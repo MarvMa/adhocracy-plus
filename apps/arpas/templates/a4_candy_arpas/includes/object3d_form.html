@@ -1,0 +1,13 @@
+{% load i18n %}
+<form enctype="multipart/form-data" action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    {{ form.media }}
+
+    {% include "a4_candy_contrib/includes/form_field.html" with field=form.name %}
+    {% include "a4_candy_contrib/includes/form_field.html" with field=form.file %}
+
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ cancel }}" class="btn btn--secondary me-2">{% translate "Cancel" %}</a>
+        <button type="submit" class="btn btn--primary">{% translate "Save" %}</button>
+    </div>
+</form>

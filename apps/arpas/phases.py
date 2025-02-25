@@ -7,17 +7,16 @@ from . import models
 from . import views
 
 
-class SuggestionPhase(phases.PhaseContent):
+class ArpasPhase(phases.PhaseContent):
     app = apps.Config.label
-    phase = "suggestion"
-    view = views.ArpasModuleDetail
+    phase = "arpas"
+    view = views.Object3DListView
 
-    name = _("Suggestion phase")
-    description = _("Suggest ideas.")
-    module_name = _("Suggest")
-    icon = "lightbulb-o"
+    name = _("ARPAS phase")
+    description = _("Review and rate 3D objects) Ideas.")
+    module_name = _("arpas")
 
-    features = {}
+    features = {"rate": (models.Object3D,)}
 
 
-phases.content.register(SuggestionPhase())
+phases.content.register(ArpasPhase())

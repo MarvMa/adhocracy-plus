@@ -25,6 +25,7 @@ from adhocracy4.polls.api import PollViewSet
 from adhocracy4.ratings.api import RatingViewSet
 from adhocracy4.reports.api import ReportViewSet
 from apps.account.api import AccountViewSet
+from apps.arpas.api import Object3DViewSet
 from apps.contrib import views as contrib_views
 from apps.contrib.sitemaps import static_sitemap_index
 from apps.documents.api import DocumentViewSet
@@ -55,7 +56,8 @@ router.register(r"users", UserViewSet, basename="users")
 router.register(
     r"moderationprojects", ModerationProjectsViewSet, basename="moderationprojects"
 )
-
+# ARPAS 3D Objects
+router.register(r"3d-objects", Object3DViewSet, basename="3d-objects")
 
 module_router = a4routers.ModuleDefaultRouter()
 # FIXME: rename to 'chapters'
@@ -196,7 +198,6 @@ urlpatterns = [
     ),
 ]
 
-
 if settings.DEBUG:
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -218,7 +219,6 @@ if settings.DEBUG:
         urlpatterns = [
             path("__debug__/", include(debug_toolbar.urls)),
         ] + urlpatterns
-
 
 # generic patterns at the very end
 urlpatterns += [

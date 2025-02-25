@@ -6,6 +6,7 @@ from datetime import timedelta
 
 from django.conf import locale
 from django.utils.translation import gettext_lazy as _
+from dotenv import load_dotenv
 
 CONFIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(CONFIG_DIR)
@@ -34,7 +35,8 @@ INSTALLED_APPS = (
     "widget_tweaks",
     "rest_framework",
     "rest_framework.authtoken",
-    # JWT authentication
+    # MinIO Apps
+    "storages",
     "rest_framework_simplejwt.token_blacklist",
     "django_filters",
     "allauth",
@@ -166,7 +168,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "adhocracy-plus.config.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -180,6 +181,21 @@ DATABASES = {
     }
 }
 
+# MinIO settings
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+load_dotenv()
+# MinIO connection details
+AWS_S3_ENDPOINT_URL = f"http://{os.environ.get('MINIO_ENDPOINT', 'minio:9000')}"
+AWS_ACCESS_KEY_ID = os.environ.get("MINIO_ROOT_USER", "minio")
+AWS_SECRET_ACCESS_KEY = os.environ.get("MINIO_ROOT_PASSWORD", "minio123")
+AWS_STORAGE_BUCKET_NAME = os.environ.get("MINIO_BUCKET_NAME", "arpas")
+
+AWS_S3_ADDRESSING_STYLE = "path"
+AWS_QUERYSTRING_AUTH = False
+
+# AWS_DEFAULT_ACL = None
+# AWS_S3_FILE_OVERWRITE = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -190,7 +206,6 @@ DEFAULT_USER_LANGUAGE_CODE = "de"
 TIME_ZONE = "Europe/Berlin"
 
 USE_I18N = True
-
 
 USE_TZ = True
 
@@ -267,7 +282,6 @@ THUMBNAIL_ALIASES = {
 }
 
 ALLOWED_UPLOAD_IMAGES = ("png", "jpeg", "gif")
-
 
 # Authentication
 
